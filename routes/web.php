@@ -16,3 +16,8 @@ Route::get('/', function () {
 });
 
 Route::resource('products', 'ProductController');
+
+// メールでの認証が済んでいない場合はメール送信画面へと遷移
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
