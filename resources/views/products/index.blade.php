@@ -8,7 +8,7 @@
     <!-- 削除リクエストを送信するフォームを作成 -->
     <!-- Deleteボタンが押された際に削除するかを確認 -->
     <form action="/products/{{ $product->id }}" method="POST" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else { return false };">
-        <input type="hidden" name="method" value="DELETE">
+        <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <button type="submit">Delete</button>
     </form>

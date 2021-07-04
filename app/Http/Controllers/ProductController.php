@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         // resources\views\productsディレクトリ内のshow.blade.phpをビューとして使用
         // compact('product')で商品のデータが保存されている変数を、ビューへと渡す
-        return view('product.show', compact('product'));
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -82,7 +82,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         // view関数を使って使用するビューを指定,compact以下で複数の変数をビューに渡す
-        return view('product.edit', compact('product', 'categories'));
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ProductController extends Controller
         // 更新
         $product->update();
         // リダイレクト
-        return redirect()->route('product.show', ['id' => $product->id]);
+        return redirect()->route('products.show', ['id' => $product->id]);
     }
 
     /**
@@ -116,6 +116,6 @@ class ProductController extends Controller
         // データベースから指定の商品のデータを削除
         $product->delete();
         // /productsというURLへリダイレクト
-        return redirect()->route('product.index');
+        return redirect()->route('products.index');
     }
 }
