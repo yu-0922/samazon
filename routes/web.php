@@ -15,8 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('products', 'ProductController');
+// Route:postでPOSTで使用するルーティングだと分かるようにする
+// products/{product}/reviewsとして商品のデータを自動的に取得
+// 使用するコントローラーとそのアクションを、ReviewController@storeと指定
+Route::post('products/{product}/reviews', 'ReviewController@store');
 
+Route::resource('products', 'ProductController');
 // メールでの認証が済んでいない場合はメール送信画面へと遷移
 Auth::routes(['verify' => true]);
 

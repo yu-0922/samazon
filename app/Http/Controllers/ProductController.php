@@ -67,9 +67,11 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        // 商品についての全てのレビューを取得して$reviewsに保存
+        $reviews = $product->reviews()->get();
         // resources\views\productsディレクトリ内のshow.blade.phpをビューとして使用
-        // compact('product')で商品のデータが保存されている変数を、ビューへと渡す
-        return view('products.show', compact('product'));
+        // compact('product', 'reviews')で商品のデータが保存されている変数を、ビューへと渡す
+        return view('products.show', compact('product', 'reviews'));
     }
 
     /**

@@ -48,4 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // レビューと紐付け
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
+    }
 }
