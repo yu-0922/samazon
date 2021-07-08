@@ -20,6 +20,8 @@ Route::get('/', function () {
 // 使用するコントローラーとそのアクションを、ReviewController@storeと指定
 Route::post('products/{product}/reviews', 'ReviewController@store');
 
+Route::get('products/{product}/favorite', 'ProductController@favorite')->name('products.favorite');
+
 Route::resource('products', 'ProductController');
 // メールでの認証が済んでいない場合はメール送信画面へと遷移
 Auth::routes(['verify' => true]);

@@ -42,10 +42,19 @@
                         </button>
                     </div>
                     <div class="col-5">
-                        <a href="/products/{{ $product->id }}/favorite" class="btn samazon-favorite-button text-dark w-100">
-                            <i class="fa fa-heart"></i>
-                            お気に入り
-                        </a>
+                        <!-- isFavoritedBy(Auth::user())でその商品がログインしているユーザーによってお気に入り登録されているか確認 -->
+                        <!-- お気に入り登録されているか場合は、解除ボタンを押すとお気に入りから解除できる -->
+                        @if($product->isFavoritedBy(Auth::user()))
+                            <a href="/products/{{ $product->id }}/favorite" class="btn samazon-favorite-button text-favorite w-100">
+                                <i class="fa fa-heart"></i>
+                                お気に入り解除
+                            </a>
+                        @else
+                            <a href="/products/{{ $product->id }}/favorite" class="btn samazon-favorite-button text-favorite w-100">
+                                <i class="fa fa-heart"></i>
+                                お気に入り
+                            </a>
+                        @endif
                     </div>
                 </div>
             </form>

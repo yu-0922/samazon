@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 // カテゴリーを扱うCategoryモデルをこのファイル内で使用できる
 use App\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,13 +15,30 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request) 
     {
         //Productモデルを使って全ての商品データをデータベースから取得し、$productsに代入
-        $products = Product::all(); 
+        $products = Product::paginate(15); 
         
         //呼び出すビューを指定し、$productsをビューに渡す
         return view('products.index', compact('products'));
+    }
+
+    public function favorite(Product $product)
+    {
+        // 現在のユーザー情報を$userに代入
+        $user = Auth::user();
+
+        // ユーザーがその商品をお気に入り済みかチェック
+        if ($user->hasFavorited($product)) {
+            // お気に入り済みの場合は解除
+            $user->unfavorite($product);
+        } else {
+            // 登録していない場合はお気に入りとして登録
+            $user->favorite($product);
+        }
+
+        return redirect()->route('products.show', ['id' => $product->id]);
     }
 
     /**
