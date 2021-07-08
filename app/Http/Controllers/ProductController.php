@@ -15,13 +15,25 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // $request内に$category->idの値が保存されている
     public function index(Request $request) 
     {
-        //Productモデルを使って全ての商品データをデータベースから取得し、$productsに代入
-        $products = Product::paginate(15); 
+        if ($request->category !== null) {
+            // 受け取った絞り込みたいカテゴリーIDを持つ商品データを取得
+            $products = Product::Where('category_id', $request->category)->paginate(15);
+            $category = Category::find($request->category);
+        } else {
+            // Productモデルを使って全ての商品データをデータベースから取得し、$productsに代入
+            $products = Product::paginate(15);
+            $category = null;
+        }
+
+        $categories = Category::all();
+        // 全カテゴリーからmajor_category_nameのカラムのみ取得。その上でunique()を使って重複している部分を削除
+        $major_category_names = Category::pluck('major_category_name')->unique();
         
-        //呼び出すビューを指定し、$productsをビューに渡す
-        return view('products.index', compact('products'));
+        // 呼び出すビューを指定し、$productsをビューに渡す
+        return view('products.index', compact('products', 'category', 'categories', 'major_category_names'));
     }
 
     public function favorite(Product $product)
