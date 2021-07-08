@@ -18,22 +18,39 @@ class ProductController extends Controller
     // $request内に$category->idの値が保存されている
     public function index(Request $request) 
     {
+        $sort_query = [];
+        $sorted = "";
+
+        if ($request->sort !== null) {
+            $slices = explode(' ', $request->sort);
+            $sort_query[$slices[0]] = $slices[1];
+            $sorted = $request->sort;
+        }
+
         if ($request->category !== null) {
             // 受け取った絞り込みたいカテゴリーIDを持つ商品データを取得
-            $products = Product::Where('category_id', $request->category)->paginate(15);
+            $products = Product::Where('category_id', $request->category)->sortable($sort_query)->paginate(15);
             $category = Category::find($request->category);
         } else {
             // Productモデルを使って全ての商品データをデータベースから取得し、$productsに代入
-            $products = Product::paginate(15);
+            $products = Product::sortable($sort_query)->paginate(15);
             $category = null;
         }
+
+        $sort = [
+            '並び替え' => '', 
+            '価格の安い順' => 'price asc',
+            '価格の高い順' => 'price desc', 
+            '出品の古い順' => 'updated_at asc', 
+            '出品の新しい順' => 'updated_at desc'
+        ];
 
         $categories = Category::all();
         // 全カテゴリーからmajor_category_nameのカラムのみ取得。その上でunique()を使って重複している部分を削除
         $major_category_names = Category::pluck('major_category_name')->unique();
         
         // 呼び出すビューを指定し、$productsをビューに渡す
-        return view('products.index', compact('products', 'category', 'categories', 'major_category_names'));
+        return view('products.index', compact('products', 'category', 'categories', 'major_category_names', 'sort', 'sorted'));
     }
 
     public function favorite(Product $product)
