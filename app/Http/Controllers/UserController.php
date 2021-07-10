@@ -12,6 +12,7 @@ class UserController extends Controller
     {
         // ユーザー自身の情報を$userに保存
         $user = Auth::user();
+
         // ビューに渡してビュー側で表示
         return view('users.mypage', compact('user'));
     }
@@ -55,5 +56,27 @@ class UserController extends Controller
         $user = Auth::user();
 
         return view('users.edit_address', compact('user'));
+    }
+
+    public function edit_password()
+    {
+        return view('users.edit_password');
+    }
+
+    public function update_password(Request $request)
+    {
+        $user = Auth::user();
+
+        // 送信されたリクエスト内のpasswordとconfirm_passwordが同一か確認
+        if($request->input('password') == $request->input('confirm_password')) {
+            // 同一ならパスワードを暗号化しデータベースへ保存
+            $user->password = bcrypt($request->input('password'));
+            $user->update();
+        } else {
+            // 異なっていたらパスワード変更画面へとリダイレクト
+            return redirect()->route('mypage.edit_password');
+        }
+
+        return redirect()->route('mypage');
     }
 }
