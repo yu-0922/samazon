@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// カートの中身を確認するページへのURLを設定
+Route::get('users/carts', 'CartController@index')->name('carts.index');
+// カートへ追加する処理のルーティングを設定
+Route::post('users/carts', 'CartController@store')->name('carts.store');
+Route::delete('users/carts', 'CartController@destroy')->name('carts.destroy');
 // ユーザー情報関連の各ルーティングを設定
 Route::get('users/mypage', 'UserController@mypage')->name('mypage');
 Route::get('users/mypage/edit', 'UserController@edit')->name('mypage.edit');
@@ -35,9 +40,5 @@ Route::get('products/{product}/favorite', 'ProductController@favorite')->name('p
 Route::resource('products', 'ProductController');
 // メールでの認証が済んでいない場合はメール送信画面へと遷移
 Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
