@@ -40,3 +40,9 @@ Route::resource('products', 'ProductController');
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// APP_EVNの値を読み取り、その値がproductionと同じかどうかで処理を切り分ける
+if(env('APP_EVN') === 'production') {
+    // httpsでアセットを読み込む
+    URL::forceScheme('https');
+}
