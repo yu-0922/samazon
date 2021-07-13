@@ -26,6 +26,8 @@ class ReviewController extends Controller
         $review->product_id = $product->id;
         // レビューを作成したユーザーのIDをレビューに保存
         $review->user_id = Auth::user()->id;
+        // フォームから送信された評価をデータベースに保存
+        $review->score = $request->input('score');
         $review->save();
 
         return redirect()->route('products.show', $product);
