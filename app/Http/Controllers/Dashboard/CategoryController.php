@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Category;
+use App\MajorCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,24 +18,26 @@ class CategoryController extends Controller
     {
         $categories = Category::paginate(15);
 
-        return view('dashboard.categories.index', compact('categories'));
+        $major_categories = MajorCategory::all();
+
+        return view('dashboard.categories.index', compact('categories', 'major_categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $category = new Category();
-        $category->name = $request->input('name');
-        $category->description = $request->input('description');
-        $category->major_category_name = $request->input('major_category_name');
-        $category->save();
+    // /**
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function create()
+    // {
+    //     $category = new Category();
+    //     $category->name = $request->input('name');
+    //     $category->description = $request->input('description');
+    //     $category->major_category_name = $request->input('major_category_name');
+    //     $category->save();
 
-        return view("/dashboard/categories");
-    }
+    //     return view("/dashboard/categories");
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -44,7 +47,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->major_category_id = $request->input('major_category_id');
+        $category->major_category_name = MajorCategory::find($request->input('major_category_id'))->name;
+        $category->save();
+
+        return view("/dashboard/categories");
     }
 
     /**
@@ -66,7 +76,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('dashboard.categories.edit', compact('category'));
+        $major_categories = MajorCategory::all();
+        
+        return view('dashboard.categories.edit', compact('category', 'major_categories'));
     }
 
     /**
@@ -80,7 +92,8 @@ class CategoryController extends Controller
     {
         $category->name = $request->input('name');
         $category->description = $request->input('description');
-        $category->major_category_name = $request->input('major_category_name');
+        $category->major_category_id = $request->input('major_category_id');
+        $category->major_category_name = MajorCategory::find($request->input('major_category_id'))->name;
         $category->update();
 
         return view("/dashboard/categories");
