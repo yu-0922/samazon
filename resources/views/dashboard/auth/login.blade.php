@@ -1,6 +1,5 @@
-<!-- layoutsディレクトリ内のapp.blade.phpを基本的なレイアウトファイルとして利用する -->
 @extends('layouts.dashboard')
-<!-- app.blade.php内の@yield('content')部分に差し込まれる -->
+
 @section('content')
 
 <div class="container">

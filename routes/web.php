@@ -41,6 +41,14 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/dashboard', 'DashboardController@index')->middleware('auth:admins');
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+    Route::get('login', 'Dashboard\Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'Dashboard\Auth\LoginController@login')->name('login');
+    Route::resource('categories', 'Dashboard\CategoryController')->middleware('auth:admins');
+});
+
 // APP_EVNの値を読み取り、その値がproductionと同じかどうかで処理を切り分ける
 if(env('APP_EVN') === 'production') {
     // httpsでアセットを読み込む

@@ -41,6 +41,13 @@ return [
             'provider' => 'users',
         ],
 
+        'admins' => [
+            // セッションでログイン状態を保持
+            'driver' => 'session',
+            // 認証に使用する確認方法としてadminsを指定
+            'provider' => 'admins',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -69,6 +76,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        // adminsというproviderを追加
+        'admins' => [
+            // 確認方法を指定。eloquentを指定して、データベースに保存されているデータをもとに確認する
+            'driver' => 'eloquent',
+            // データベースのどのデータを使用するか指定
+            'model' => App\Admin::class,
         ],
 
         // 'users' => [
