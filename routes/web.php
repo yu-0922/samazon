@@ -17,8 +17,10 @@ Route::get('/', 'WebController@index');
 Route::get('users/carts', 'CartController@index')->name('carts.index');
 // カートへ追加する処理のルーティングを設定
 Route::post('users/carts', 'CartController@store')->name('carts.store');
+Route::put('users/carts', 'CartController@update')->name('carts.update');
 Route::delete('users/carts', 'CartController@destroy')->name('carts.destroy');
 // ユーザー情報関連の各ルーティングを設定
+
 Route::get('users/mypage', 'UserController@mypage')->name('mypage');
 Route::get('users/mypage/edit', 'UserController@edit')->name('mypage.edit');
 Route::get('users/mypage/address/edit', 'UserController@edit_address')->name('mypage.edit_address');
@@ -27,6 +29,7 @@ Route::get('users/mypage/favorite', 'UserController@favorite')->name('mypage.fav
 // パスワード変更画面のURLとパスワードを更新するルーティングを追加
 Route::get('users/mypage/password/edit', 'UserController@edit_password')->name('mypage.edit_password');
 Route::put('users/mypage/password', 'UserController@update_password')->name('mypage.update_password');
+Route::delete('users/mypage/delete', 'UserController@destroy')->name('mypage.destroy');
 
 // Route:postでPOSTで使用するルーティングだと分かるようにする
 // products/{product}/reviewsとして商品のデータを自動的に取得

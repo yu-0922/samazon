@@ -15,7 +15,7 @@
             @endif
 
             <hr>
-            <form method="POST" action="{{ route('dashboard.login') }}">
+            <form method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <div class="form-group">

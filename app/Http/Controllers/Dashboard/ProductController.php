@@ -24,7 +24,7 @@ class ProductController extends Controller
             $sort_query[$slices[0]] = $slices[1];
             $sorted = $request->sort;
         }
-    
+
         if ($request->keyword !== null) {
             $keyword = rtrim($request->keyword);
             $total_count = Product::where('name', 'like', "%{$keyword}%")->orwhere('id', "{$keyword}")->count();
@@ -34,7 +34,7 @@ class ProductController extends Controller
             $total_count = Product::count();
             $products = Product::paginate(15);
         }
-    
+
         $sort = [
                 '価格の安い順' => 'price asc',
             '価格の高い順' => 'price desc',
@@ -70,6 +70,12 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
+        // おすすめ商品かどうかを判定するフラグを受け取って保存
+        if ($request->input('recommend') == 'on') {
+            $product->recommend_flag = true;
+        } else {
+            $product->recommend_flag = false;
+        }
         $product->save();
 
         return redirect()->route('dashboard.products.index');
@@ -101,6 +107,11 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
+        if ($request->input('recommend') == 'on') {
+            $product->recommend_flag = true;
+        } else {
+            $product->recommend_flag = false;
+        }
         $product->update();
 
         return redirect()->route('dashboard.products.index');
