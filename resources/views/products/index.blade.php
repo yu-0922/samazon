@@ -13,8 +13,8 @@
         <div class="container">
             @if ($category !== null)
                 <a href="/">トップ</a> > <a href="#">{{ $category->major_category_name }}</a> > {{ $category->name }}
-                <h1>{{ $category->name }}の商品一覧{{$products->count()}}件</h1>
-            
+                <h1>{{ $category->name }}の商品一覧{{ $products->count() }}件</h1>
+
                 <form method="GET" action="{{ route('products.index')}}" class="form-inline">
                     <input type="hidden" name="category" value="{{ $category->id }}">
                     並び替え
@@ -26,7 +26,7 @@
                                 <option value="{{ $value }}">{{ $key }}</option>
                             @endif
                         @endforeach
-                    </select>   
+                    </select>
                 </form>
             @endif
         </div>

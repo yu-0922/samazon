@@ -35,12 +35,9 @@ Route::delete('users/mypage/delete', 'UserController@destroy')->name('mypage.des
 // products/{product}/reviewsとして商品のデータを自動的に取得
 // 使用するコントローラーとそのアクションを、ReviewController@storeと指定
 Route::post('products/{product}/reviews', 'ReviewController@store');
-
 Route::get('products/{product}/favorite', 'ProductController@favorite')->name('products.favorite');
-
 Route::get('products', 'ProductController@index')->name('products.index');
-
-
+Route::get('products/{product}', 'ProductController@show')->name('products.show');
 // メールでの認証が済んでいない場合はメール送信画面へと遷移
 Auth::routes(['verify' => true]);
 

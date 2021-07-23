@@ -44,12 +44,12 @@ class CartController extends Controller
         // ユーザーのIDを元にカートのデータを作成し、add()関数を使って送信されたデータを元に商品を追加
         Cart::instance(Auth::user()->id)->add(
             [
-                'id' => $request->_token, 
-                'name' => $request->name, 
-                'qty' => $request->qty, 
-                'price' => $request->price, 
-                'weight' => $request->weight, 
-            ] 
+                'id' => $request->_token,
+                'name' => $request->name,
+                'qty' => $request->qty,
+                'price' => $request->price,
+                'weight' => $request->weight,
+            ]
         );
         // 商品追加後、そのまま商品の個別ページにリダイレクト
         return redirect()->route('products.show', $request->get('id'));
@@ -102,18 +102,44 @@ class CartController extends Controller
     // カートの商品を購入する処理を実装
     public function destroy(Request $request)
     {
-        $user_shoppingcarts = DB::table('shoppingcart')->where('instance', Auth::user()->id)->get();
-
+        $user_shoppingcarts = DB::table('shoppingcart')->get();
+        $number = DB::table('shoppingcart')->where('instance', Auth::user()->id)->count();
         // 現在までのユーザーが注文したカートの数を取得
         $count = $user_shoppingcarts->count();
 
         // 新しくデータベースに登録するカートのデータ用にカートのIDを１つ増やす
         $count += 1;
-        //ユーザーのIDを使ってカート内の商品情報などをデータベースに保存
-        Cart::instance(Auth::user()->id)->store;
+        $number += 1;
+        $cart = Cart::instance(Auth::user()->id)->content();
 
-        // データベース内のshoppingcartテーブルへのアクセス。where()を使ってユーザーのIDとカート数$countを使い、先ほど作成したカートのデータを更新
-        DB::table('shoppingcart')->where('instance', Auth::user()->id)->where('number', null)->update(['number' => $count, 'buy_flag' => true]);
+        $price_total = 0;
+        $qty_total = 0;
+
+        foreach ($cart as $c) {
+            if ($c->options->carriage) {
+                $price_total += ($c->qty * ($c->price + 800));
+            } else {
+                $price_total += $c->qty * $c->price;
+            }
+            $qty_total += $c->qty;
+        }
+
+        //ユーザーのIDを使ってカート内の商品情報などをデータベースに保存
+        Cart::instance(Auth::user()->id)->store($count);
+
+        // データベース内のshoppingcartテーブルへのアクセス。where()を使ってユーザーのIDとカート数$countなどを使い、先ほど作成したカートのデータを更新
+        DB::table('shoppingcart')->where('instance', Auth::user()->id)
+                                ->where('number', null)
+                                ->update(
+                                    [
+                                        'code' => substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 10),
+                                        'number' => $number,
+                                        'price_total' => $price_total,
+                                        'qty' => $qty_total,
+                                        'buy_flag' => true,
+                                        'updated_at' => date("Y/m/d H:i:s")
+                                    ]
+                                );
 
         Cart::instance(Auth::user()->id)->destroy();
 
