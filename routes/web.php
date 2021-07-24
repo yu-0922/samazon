@@ -20,7 +20,6 @@ Route::post('users/carts', 'CartController@store')->name('carts.store');
 Route::put('users/carts', 'CartController@update')->name('carts.update');
 Route::delete('users/carts', 'CartController@destroy')->name('carts.destroy');
 // ユーザー情報関連の各ルーティングを設定
-
 Route::get('users/mypage', 'UserController@mypage')->name('mypage');
 Route::get('users/mypage/edit', 'UserController@edit')->name('mypage.edit');
 Route::get('users/mypage/address/edit', 'UserController@edit_address')->name('mypage.edit_address');

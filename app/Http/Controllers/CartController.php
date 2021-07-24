@@ -26,7 +26,11 @@ class CartController extends Controller
         $total = 0;
 
         foreach ($cart as $c) {
-            $total += $c->qty * $c->price;
+            if($c->options->carriage) {
+                $total += ($c->qty * ($c->price + env('CARRIAGE')));
+            } else {
+                $total += $c->qty * $c->price;
+            }
         }
 
         return view('carts.index', compact('cart', 'total'));
@@ -49,6 +53,9 @@ class CartController extends Controller
                 'qty' => $request->qty,
                 'price' => $request->price,
                 'weight' => $request->weight,
+                'options' => [
+                    'carriage' => $request->carriage
+                ]
             ]
         );
         // 商品追加後、そのまま商品の個別ページにリダイレクト
