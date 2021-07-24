@@ -52,7 +52,13 @@
                 @foreach($products as $product)
                 <tr>
                     <th scope="row">{{ $product->id }}</td>
-                    <td><img src="{{ asset('img/dummy.png')}}" class="img-fluid h-10"></td>
+                    <td>
+                    @if ($product->image !== "")
+                    <img src="{{ asset('storage/products/'.$product->image) }}" class="h-10 img-fluid">
+                    @else
+                    <img src="{{ asset('img/dummy.png')}}" class="h-10 img-fuild">
+                    @endif
+                    </td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->category["name"] }}</td>
