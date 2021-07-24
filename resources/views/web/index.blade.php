@@ -13,7 +13,7 @@
             <div class="col-4">
                 <a href="/products/{{ $recommend_product->id }}">
                     @if ($recommend_product->image !== "")
-                    <img src="{{ asset('storage/products/'.$recommend_product->image) }}" class="img-thumbnail">
+                    <img src="{{ Storage::disk('s3')->url($recommend_product->image) }}" class="img-thumbnail">
                     @else
                     <img src="{{ asset('img/dummy.png')}}" class="img-thumbnail">
                     @endif
@@ -36,7 +36,7 @@
             <div class="col-3">
                 <a href="/products/{{ $recently_product->id }}">
                     @if ($recently_product->image !== "")
-                    <img src="{{ asset('storage/products/'.$recently_product->image) }}" class="img-thumbnail">
+                    <img src="{{ Storage::disk('s3')->url($recently_product->image) }}" class="img-thumbnail">
                     @else
                     <img src="{{ asset('img/dummy.png')}}" class="img-thumbnail">
                     @endif

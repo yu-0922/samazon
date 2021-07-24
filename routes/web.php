@@ -29,6 +29,8 @@ Route::get('users/mypage/favorite', 'UserController@favorite')->name('mypage.fav
 Route::get('users/mypage/password/edit', 'UserController@edit_password')->name('mypage.edit_password');
 Route::put('users/mypage/password', 'UserController@update_password')->name('mypage.update_password');
 Route::delete('users/mypage/delete', 'UserController@destroy')->name('mypage.destroy');
+Route::get('users/mypage/register_card', 'UserController@register_card')->name('mypage.register_card');
+Route::post('users/mypage/token', 'UserController@token')->name('mypage.token');
 Route::get('users/mypage/cart_history', 'UserController@cart_history_index')->name('mypage.cart_history');
 Route::get('users/mypage/cart_history/{num}', 'UserController@cart_history_show')->name('mypage.cart_history_show');
 
