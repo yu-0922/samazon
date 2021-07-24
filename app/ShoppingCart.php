@@ -85,4 +85,23 @@ class ShoppingCart extends Model
 
         return $orders;
     }
+
+    public static function getCurrentUserOrders($user_id)
+    {
+        $shoppingcarts = DB::table('shoppingcart')->where("instance", "{$user_id}")->get();
+
+        $orders = [];
+
+        foreach($shoppingcarts as $order) {
+            $orders[] = [
+                'id' => $order->number,
+                'created_at' => $order->updated_at,
+                'total' => $order->price_total,
+                'user_name' => User::find($order->instance)->name,
+                'code' => $order->code
+            ];
+        }
+
+        return $orders;
+    }
 }

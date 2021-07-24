@@ -29,6 +29,8 @@ Route::get('users/mypage/favorite', 'UserController@favorite')->name('mypage.fav
 Route::get('users/mypage/password/edit', 'UserController@edit_password')->name('mypage.edit_password');
 Route::put('users/mypage/password', 'UserController@update_password')->name('mypage.update_password');
 Route::delete('users/mypage/delete', 'UserController@destroy')->name('mypage.destroy');
+Route::get('users/mypage/cart_history', 'UserController@cart_history_index')->name('mypage.cart_history');
+Route::get('users/mypage/cart_history/{num}', 'UserController@cart_history_show')->name('mypage.cart_history_show');
 
 // Route:postでPOSTで使用するルーティングだと分かるようにする
 // products/{product}/reviewsとして商品のデータを自動的に取得
