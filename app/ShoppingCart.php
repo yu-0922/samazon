@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\User;
 
 class ShoppingCart extends Model
 {
@@ -65,5 +66,23 @@ class ShoppingCart extends Model
         }
 
         return $billings;
+    }
+
+    public static function getOrders($code)
+    {
+        $shoppingcarts = DB::table('shoppingcart')->where("code", 'like', "%{$code}%")->get();
+
+        $orders = [];
+
+        foreach($shoppingcarts as $order) {
+            $orders[] = [
+                'created_at' => $order->created_at,
+                'total' => $order->price_total,
+                'user_name' => User::find($order->instance)->name,
+                'code' => $order->code
+            ];
+        }
+
+        return $orders;
     }
 }

@@ -1,7 +1,9 @@
 <div class="container ml-3">
     <h2>受注管理</h2>
     <div class="d-flex flex-column">
-        <label class="samazon-sidebar-category-label">受注一覧</label>
+        <label class="samazon-sidebar-category-label">
+            <a href="/dashboard/orders">受注一覧</a>
+        </label>
     </div>
 
     <h2>商品管理</h2>
