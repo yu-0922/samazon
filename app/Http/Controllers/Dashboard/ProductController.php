@@ -80,7 +80,7 @@ class ProductController extends Controller
             $product->recommend_flag = false;
         }
 
-        if ($request->file('image') == null) {
+        if ($request->file('image') !== null) {
             $product->image = Storage::disk('s3')->putFile('public/products', $request->file('image'), 'public');
         } else {
             $product->image = '';
