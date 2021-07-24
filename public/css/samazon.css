@@ -68,6 +68,7 @@ body {
     font-style: normal;
     line-height: normal;
     letter-spacing: 0.11px;
+    background-color: #c9c4fcc2;
 }
 
 caption {
@@ -134,7 +135,7 @@ label {
     letter-spacing: normal;
     color: #b2b2b2;
     color: #ffffff;
-    background-color: #0fbe9f;
+    background-color: #0fb2be;
 }
 
 .samazon-login-text {
@@ -145,7 +146,7 @@ label {
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: #0fbe9f;
+    color: #0fb2be;
 }
 
 /* header */
@@ -159,7 +160,7 @@ label {
 }
 
 .samazon-header-search-button {
-    background-color: #0fbe9f;
+    background-color: #0fb2be;
 }
 
 .samazon-header-search-icon {
@@ -189,12 +190,12 @@ label {
 
 .samazon-favorite-button {
     border-radius: 2px;
-    border: solid 1px #0fbe9f;
+    border: solid 1px #0fb2be;
     background-color: #ffffff;
 }
 
 .text-favorite {
-    color: #0fbe9f;
+    color: #0fb2be;
 }
 
 .user-edit-label {
@@ -204,15 +205,15 @@ label {
 
 .samazon-favorite-add-cart {
     border-radius: 2px;
-    background-color: #0fbe9f;
+    background-color: #0fb2be;
 }
 
 .review-score-color {
-    color: #0fbe9f;
+    color: #0fb2be;
 }
 
 .review-score-color:focus {
-    color: #0fbe9f;
+    color: #0fb2be;
 }
 
 .dashboard-edit-link {
@@ -223,7 +224,7 @@ label {
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: #0fbe9f;
+    color: #0fb2be;
 }
 
 .dashboard-delete-link {
@@ -252,4 +253,24 @@ label {
 .samazon-delete-submit-button {
     border-radius: 2px;
     background-color: #d94b0e;
+}
+
+.samazon-button {
+    border-radius: 2px;
+    border: solid 1px #b2b2b2;
+    background-color: #ffffff;
+}
+
+.flash-success-font {
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #0fb2be;
+}
+
+.flash-success-bg {
+    border-radius: 2px;
+    background-color: #ceeee8;
 }
